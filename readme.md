@@ -2,5 +2,7 @@
 list of repo
 1. Vagrant
 2. etc
+
+notes:
 compiled by Rizky Ramadhan
 Lead devops @bareksa.com
