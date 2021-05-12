@@ -1,6 +1,5 @@
-Learn Provisioning server database with vagrant
-```
-https://www.yourtechy.com/technology/mysql-server-vagrant-virtualbox/
-```
-Compiled by Rizky Ramadhan
-Lead Devops @bareksa.com
+#REPO BATCH 10
+1.Vagrant
+2.etc
+compiled by Rizky Ramadhan
+Lead devops @bareksa.com
