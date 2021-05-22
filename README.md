@@ -1,7 +1,8 @@
 # REPO BATCH 10
 list of repo
 1. Vagrant
-2. etc
+2. 
+3. git exercise
 
 notes:
 compiled by Rizky Ramadhan
