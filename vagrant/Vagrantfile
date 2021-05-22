@@ -1,11 +1,34 @@
 Vagrant.configure(2) do |config|
 
-  config.vm.box = "ubuntu/xenial64"
+  config.vm.define "lb1" do |lb1|
+    lb1.vm.box = "ubuntu/bionic64"
+    lb1.vm.network "private_network", ip: "192.168.2.237"
+    lb1.vm.provision "shell", path: "https://gist.githubusercontent.com/geraldGhibran/6a000c7f6f696abadcf57878d165877b/raw/d1b3662117ffc58ac6ba7f2193eff1f807838f39/load-balancer1.sh"
+  end
 
-  config.vm.define "db-server" do |db|
-      db.vm.network "public_network", :bridge => "eth0", ip: "192.168.1.237"
+  config.vm.define "web1" do |web1|
+    web1.vm.box = "ubuntu/bionic64"
+    web1.vm.network "private_network", ip: "192.168.2.238"
+    web1.vm.provision :shell do |shell|
+      shell.args = "1"
+      shell.path = "https://gist.githubusercontent.com/geraldGhibran/520cab16b9343d2ccd041f4ddb6ad62e/raw/7dee35ab1707847fd23c205ec8bc2eabc546b258/provision-web.sh"
+    end
+  end
+
+  config.vm.define "web2" do |web2|
+    web2.vm.box = "ubuntu/bionic64"
+    web2.vm.network "private_network", ip: "192.168.2.239"
+    web2.vm.provision :shell do |shell|
+      shell.args = "2"
+      shell.path = "https://gist.githubusercontent.com/geraldGhibran/520cab16b9343d2ccd041f4ddb6ad62e/raw/7dee35ab1707847fd23c205ec8bc2eabc546b258/provision-web.sh"
+    end
+  end
+
+  config.vm.define "db" do |db|
+      db.vm.box = "ubuntu/xenial64"
+      db.vm.network "public_network", :bridge => "eth0", ip: "192.168.1.240"
       db.vm.network "forwarded_port", guest: 3306, host: 3306
       db.vm.network "forwarded_port", guest: 80, host: 8306
-      db.vm.provision "shell", path: "bootstrap.sh"
+      db.vm.provision "shell", path: "shellscript/database.sh"
   end
 end 
