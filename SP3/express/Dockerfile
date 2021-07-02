@@ -15,7 +15,7 @@ RUN apk add --no-cache python make gcc g++ \
 # Build app
 # RUN npm start
 
-# EXPOSE 8080
+EXPOSE 3000
 
 # start command
 CMD [ "node","server.js"]
