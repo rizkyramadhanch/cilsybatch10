@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  namespace: devops
+  name: nginx-app-err
+  labels:
+     app: nginx-app-err
+spec:
+  containers:
+  - name: nginx-app-err
+    image: nginx:alpine
+    ports:
+    - containerPort: 80
+    resources:
+      limits:
+        memory: "700Mi"
+        cpu: "0.6"      
+      requests:
+        memory: "600Mi"
+        cpu: "0.6"
