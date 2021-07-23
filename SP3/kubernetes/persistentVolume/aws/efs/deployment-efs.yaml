@@ -1,0 +1,37 @@
+# Deploy the pods
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: d-sandbox-deployment
+  namespace: default
+  labels:
+    app: bbox-sandbox
+    env: development
+spec:
+  selector:
+    matchLabels:
+      app: d-sandbox
+      env: development
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: d-sandbox
+        env: development
+    spec:
+      volumes:
+      - name: d-sandbox-log
+        persistentVolumeClaim:
+          claimName: efs
+      imagePullSecrets:
+      - name: registry-secret
+      containers:
+      - name: d-sandbox
+        image: tuanpembual/sandbox:latest
+        imagePullPolicy: Always
+        ports:
+          - containerPort: 8080
+        volumeMounts:
+        - name: d-sandbox-log
+          mountPath: "/log"
+          subPath: "sandbox/development/"

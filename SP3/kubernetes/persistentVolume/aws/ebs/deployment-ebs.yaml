@@ -1,0 +1,35 @@
+# Deploy the pods
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: d-sandbox-deployment
+  namespace: default
+  labels:
+    app: bbox-sandbox
+    env: development
+spec:
+  selector:
+    matchLabels:
+      app: d-sandbox
+      env: development
+  replicas: 1
+  revisionHistoryLimit: 5
+  template:
+    metadata:
+      labels:
+        app: d-sandbox
+        env: development
+    spec:
+      volumes:
+        - name: sandbox-data
+          persistentVolumeClaim:
+            claimName: sandbox-pvc
+      containers:
+        - name: d-sandbox
+          image: tuanpembual/sandbox:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
+          volumeMounts:
+            - name: sandbox-data
+              mountPath: /data/

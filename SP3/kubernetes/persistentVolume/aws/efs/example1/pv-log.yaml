@@ -1,0 +1,19 @@
+# default
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pv-log
+  namespace: default
+  labels:
+    type: nfs-kubernetes
+spec:
+  storageClassName: aws-efs
+  capacity:
+      storage: 10Gi
+  accessModes:
+      - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  nfs:
+    path: /
+    server: fs-c6bc53c0.efs.us-west-2.amazonaws.com
+    readOnly: false
