@@ -1,10 +1,17 @@
 # REPO BATCH 10
-list of repo
-1. Vagrant
-2. Ansible
-3. Kubernetes
-4. Terraform
+content of this repo
+1. Bash Scripting
+2. Vagrant
+3. Ansible
+4. Kubernetes
+5. Jenkins Pipeline
+6. Prometheus-NodeExporter-Grafana
+7. Fluentd-Elasticsearch-Logstash-Kibana
+8. Ambassador Api Gateway
+9. Linkerd Microservices
+8. Terraform Provisioner
 
 notes:
 compiled by Rizky Ramadhan
-Lead devops @bareksa.com
+Former Lead devops @bareksa
+Senior Analyst Devops @amartha
