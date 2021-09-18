@@ -44,3 +44,4 @@ print(all_numbers)
 
 #forming new lists with a repeating sequence using the multiplication ope
 print([1,2,3] * 3)
+
