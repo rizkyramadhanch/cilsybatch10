@@ -1,0 +1,15 @@
+linters:
+  flake8:
+    fixer: true
+  shellcheck:
+    shell: bash
+  golint:
+    fixer: true
+  rubocop:
+    fixer: true
+files:
+  ignore:
+    - 'bower_components/*'
+    - 'node_modules/*'
+fixers:
+  enable: true
