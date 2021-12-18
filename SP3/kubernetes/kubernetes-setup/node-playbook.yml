@@ -37,6 +37,31 @@
       - containerd.io
     notify:
       - docker status
+  - name: Execute cat 
+    shell:
+      cmd: |
+        cat > /etc/docker/daemon.json <<EOF
+        {
+          "exec-opts": ["native.cgroupdriver=systemd"],
+          "log-driver": "json-file",
+          "log-opts": {
+            "max-size": "100m"
+          },
+          "storage-driver": "overlay2"
+        }
+        EOF
+
+        mkdir -p /etc/systemd/system/docker.service.d
+        cat > /etc/systemd/system/docker.service.d/docker.conf <<EOF
+        [Service]
+        ExecStart=
+        ExecStart=/usr/bin/dockerd
+        EOF
+
+        systemctl daemon-reload
+        systemctl restart docker
+    args:
+      executable: /bin/bash
 
   - name: Add vagrant user to docker group
     user:

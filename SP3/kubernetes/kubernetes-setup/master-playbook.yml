@@ -51,6 +51,16 @@
           "storage-driver": "overlay2"
         }
         EOF
+
+        mkdir -p /etc/systemd/system/docker.service.d
+        cat > /etc/systemd/system/docker.service.d/docker.conf <<EOF
+        [Service]
+        ExecStart=
+        ExecStart=/usr/bin/dockerd
+        EOF
+
+        systemctl daemon-reload
+        systemctl restart docker
     args:
       executable: /bin/bash
 
@@ -105,7 +115,7 @@
       daemon_reload: yes
       state: restarted
   - name: Initialize the Kubernetes cluster using kubeadm
-    command: kubeadm init --apiserver-advertise-address="192.168.50.10" --apiserver-cert-extra-sans="192.168.50.10"  --node-name k8s-master --pod-network-cidr=192.168.0.0/16
+    command: kubeadm init --apiserver-advertise-address="192.168.1.10" --apiserver-cert-extra-sans="192.168.1.10"  --node-name k8s-master --pod-network-cidr=192.168.0.0/16
   - name: Setup kubeconfig for vagrant user
     command: "{{ item }}"
     with_items:
@@ -117,7 +127,7 @@
     command: kubectl create -f https://docs.projectcalico.org/manifests/calico.yaml
 
   - name: Generate join command
-    command: kubeadm token create --print-join-command
+    command: sudo kubeadm token create --print-join-command
     register: join_command
 
   - name: Copy join command to local file
