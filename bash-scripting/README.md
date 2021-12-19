@@ -1,1 +1,0 @@
-# Learn Bash Script With Best Practice
