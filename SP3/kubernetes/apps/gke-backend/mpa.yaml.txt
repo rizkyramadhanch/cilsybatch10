@@ -1,0 +1,51 @@
+apiVersion: autoscaling.gke.io/v1beta1
+kind: MultidimPodAutoscaler
+metadata:
+  name: gin-helloworld
+  labels:
+    app: gin-helloworld
+    app.kubernetes.io/instance: gin-helloworld
+    app.kubernetes.io/managed-by: newton
+    app.kubernetes.io/name: gin-helloworld
+    backstage: staging
+    backstage.io/kubernetes-id: gin-helloworld
+    country: id
+    env: staging
+    role: DEFAULT
+    serviceName: gin-helloworld
+    type: app
+    version: "1"
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: gin-helloworld
+  goals:
+    metrics:
+    - type: Resource
+      resource:
+   # Define the target CPU utilization request here
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: 50
+  constraints:
+    global:
+      minReplicas: 2
+      maxReplicas: 5
+    containerControlledResources: [ memory ]
+    container:
+      - name: 'gin-helloworld'
+        requests:
+          minAllowed:
+            memory: 30Mi
+          maxAllowed:
+            memory: 500Mi
+      - name: 'linkerd-proxy'
+        requests:
+          minAllowed:
+            memory: 5Mi
+          maxAllowed:
+            memory: 20Mi
+  policy:
+    updateMode: Auto

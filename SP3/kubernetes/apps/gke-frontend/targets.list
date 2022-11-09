@@ -1,0 +1,1 @@
+GET http://frontend.staging.svc.cluster.local/

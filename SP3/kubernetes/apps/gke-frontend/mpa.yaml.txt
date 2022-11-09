@@ -1,0 +1,41 @@
+apiVersion: autoscaling.gke.io/v1beta1
+kind: MultidimPodAutoscaler
+metadata:
+  name: frontend
+  labels:
+    app: frontend
+    tier: frontend
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: frontend
+  goals:
+    metrics:
+    - type: Resource
+      resource:
+   # Define the target CPU utilization request here
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: 50
+  constraints:
+    global:
+      minReplicas: 2
+      maxReplicas: 5
+    containerControlledResources: [ memory ]
+    container:
+      - name: 'frontend'
+        requests:
+          minAllowed:
+            memory: 30Mi
+          maxAllowed:
+            memory: 500Mi
+      - name: 'linkerd-proxy'
+        requests:
+          minAllowed:
+            memory: 5Mi
+          maxAllowed:
+            memory: 20Mi
+  policy:
+    updateMode: Auto
